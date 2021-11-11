@@ -1,12 +1,13 @@
 [tool.poetry]
 name = "python_wifi_connect"
-version = "0.1.0"
+version = "0.1.5"
 description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 python-networkmanager = "^2.2"
+loguru = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
 
