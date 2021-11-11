@@ -20,10 +20,9 @@ HOTSPOT_CONNECTION_NAME = "hotspot"
 GENERIC_CONNECTION_NAME = "python-wifi-connect"
 
 
-# ------------------------------------------------------------------------------
-# Returns True if we are connected to the internet, False otherwise.
-def have_active_internet_connection(host="8.8.8.8", port=53, timeout=2):
+def have_active_internet_connection(host="8.8.8.8", port=53, timeout=2)->bool:
     """
+    Returns True if we are connected to the internet, False otherwise.
     Host: 8.8.8.8 (google-public-dns-a.google.com)
     OpenPort: 53/tcp
     Service: domain (DNS/TCP)
@@ -58,7 +57,7 @@ def stop_hotspot():
     return stop_connection(HOTSPOT_CONNECTION_NAME)
 
 
-def stop_connection(conn_name=GENERIC_CONNECTION_NAME):
+def stop_connection(conn_name=GENERIC_CONNECTION_NAME) -> bool:
     """Generic connection stopper / deleter."""
     # Find the hotspot connection
     try:
@@ -75,7 +74,7 @@ def stop_connection(conn_name=GENERIC_CONNECTION_NAME):
     return True
 
 
-def get_list_of_access_points(hidden_placeholder: bool = True):
+def get_list_of_access_points(hidden_placeholder: bool = True)->[]:
     """Return a list of available SSIDs and their security type, or [] for none available or error."""
     # bit flags we use when decoding what we get back from NetMan for each AP
     NM_SECURITY_NONE = 0x0
@@ -158,12 +157,12 @@ def get_list_of_access_points(hidden_placeholder: bool = True):
     return ssids
 
 
-def get_hotspot_SSID():
+def get_hotspot_SSID()->str:
     """Get hotspot SSID name."""
     return "PFC_EDU-" + os.getenv("RESIN_DEVICE_NAME_AT_INIT", "aged-cheese")
 
 
-def start_hotspot():
+def start_hotspot()->bool:
     """Start a local hotspot on the wifi interface.
     Returns True for success, False for error."""
     return connect_to_AP(CONN_TYPE_HOTSPOT, HOTSPOT_CONNECTION_NAME, get_hotspot_SSID())
@@ -342,7 +341,7 @@ def connect_to_AP(
     return False
 
 
-def get_active_access_point():
+def get_active_access_point()->NetworkManager.AccessPoint:
     """Return the active access point object from NetworkManager DBUS interface"""
     # TODO: get rid of this trick the other code doesn't need it.
     DBusGMainLoop(set_as_default=True)
